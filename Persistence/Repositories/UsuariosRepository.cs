@@ -2,31 +2,29 @@
 using Dapper;
 using Domain.Entities;
 using Persistence.Contexts;
-using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class UsersRepository : IUsersRepository
+    public class UsuariosRepository : IUsuariosRepository
     {
         private readonly DapperContext _context;
 
-        public UsersRepository(DapperContext context)
+        public UsuariosRepository(DapperContext context)
         {
             _context = context;
         }
 
-        public async Task<User> Authenticate(string userName,string password)
+        public async Task<Usuario> Authenticate(string userName,string pwd)
         {
             using (var connection = _context.CreateConnection())
             {
-                var query = "UsersGetByUserAndPassword";
+                var query = "UsuarioCredenciales";
                 var parameters = new DynamicParameters();
-                parameters.Add("UserName", userName);
-                parameters.Add("Password", password);
+                parameters.Add("Usuario", userName);
+                parameters.Add("Pwd", pwd);
 
-                var user = await connection.QuerySingleOrDefaultAsync<User>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                var user = await connection.QuerySingleOrDefaultAsync<Usuario>(query, param: parameters, commandType: CommandType.StoredProcedure);
 
                 return user;
             }
@@ -52,52 +50,52 @@ namespace Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public User Get(string id)
+        public Usuario Get(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<Usuario> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
+        public Task<IEnumerable<Usuario>> GetAllAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<User> GetAllWithPagination(int pageNumber, int pageSize)
+        public IEnumerable<Usuario> GetAllWithPagination(int pageNumber, int pageSize)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<User>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        public Task<IEnumerable<Usuario>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<User> GetAsync(string id)
+        public Task<Usuario> GetAsync(string id)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool Insert(User entity)
+        public bool Insert(Usuario entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> InsertAsync(User entity)
+        public Task<bool> InsertAsync(Usuario entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool Update(User entity)
+        public bool Update(Usuario entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync(User entity)
+        public Task<bool> UpdateAsync(Usuario entity)
         {
             throw new System.NotImplementedException();
         }

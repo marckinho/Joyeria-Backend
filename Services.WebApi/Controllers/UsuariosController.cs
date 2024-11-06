@@ -16,12 +16,12 @@ namespace Services.WebApi.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsuariosController : ControllerBase
     {
         private readonly AppSettings _appSettings;
         private readonly IMediator _mediator;
 
-        public UsersController(IOptions<AppSettings> appSettings, IMediator mediator)
+        public UsuariosController(IOptions<AppSettings> appSettings, IMediator mediator)
         { 
             _appSettings = appSettings.Value;
             _mediator = mediator;
@@ -47,7 +47,7 @@ namespace Services.WebApi.Controllers
             return BadRequest(response);
         }
 
-        private string BuildToken(Response<UserDto> usersDto)
+        private string BuildToken(Response<UsuarioDto> usersDto)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -55,9 +55,9 @@ namespace Services.WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name,usersDto.Data.UserId.ToString())
+                    new Claim(ClaimTypes.Name,usersDto.Data.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
+                Expires = DateTime.UtcNow.AddMinutes(300),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Issuer = _appSettings.Issuer,
                 Audience = _appSettings.Audience

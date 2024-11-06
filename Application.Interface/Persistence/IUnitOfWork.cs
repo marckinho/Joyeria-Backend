@@ -6,7 +6,7 @@ namespace Aplication.Interface.Persistence
     public interface IUnitOfWork : IDisposable
     {
         ICustomersRepository Customers { get; }
-        IUsersRepository Users { get; }
+        IUsuariosRepository Usuarios { get; }
         IDiscountRepository Discounts { get; }
         IProductoRepository Productos { get; }
         Task<int> Save(CancellationToken cancellationToken);

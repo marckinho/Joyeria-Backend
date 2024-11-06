@@ -1,4 +1,5 @@
 ﻿using Aplication.Interface.Persistence;
+using Application.DTO;
 using ApplicationUseCases.Customers.Commands.CreateCustomerCommand;
 using AutoMapper;
 using Domain.Entities;
@@ -27,7 +28,7 @@ namespace ApplicationUseCases.Productos.Commands.CreateProductoCommand
         {
             var response = new Response<bool>();
 
-            var producto = _mapper.Map<Producto>(request);
+            var producto = _mapper.Map<ProductoDto>(request);
             response.Data = await _unitOfWork.Productos.InsertAsync(producto);
             if (response.Data)
             {

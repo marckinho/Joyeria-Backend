@@ -12,5 +12,6 @@ namespace ApplicationUseCases.Productos.Commands.CreateProductoCommand
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public int Tipo_Producto_Id { get; set; }
     }
 }

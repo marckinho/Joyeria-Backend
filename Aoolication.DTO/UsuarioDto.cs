@@ -1,13 +1,12 @@
 ﻿namespace Application.DTO
 {
-    public class ProductoDto
+    public class UsuarioDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public string UserName { get; set; }
+        public string Pwd { get; set; }
         public bool Activo { get; set; }
-
-        public int Tipo_Producto_Venta_Id { get; set; }
-        public string Tipo_Producto_Venta_Nombre { get; set; }
-
+        public string Token { get; set; }
     }
 }

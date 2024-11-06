@@ -2,9 +2,7 @@
 using Dapper;
 using Domain.Entities;
 using Persistence.Contexts;
-using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
@@ -17,7 +15,7 @@ namespace Persistence.Repositories
             _context=context;
         }
 
-        #region Metodos Sincronos
+        /*#region Metodos Sincronos
 
         public bool Insert(Customer customers)
         {
@@ -124,7 +122,7 @@ namespace Persistence.Repositories
             return count;
         }
 
-        #endregion
+        #endregion*/
 
         #region Metodos Asincronos
 

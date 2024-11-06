@@ -1,100 +1,74 @@
-﻿using Application.Interface.Persistence;
+﻿using Aplication.Interface.Persistence;
+using Application.DTO;
+using Application.Interface.Persistence;
 using Dapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class ProductoRepository : IProductoRepository
+    public class ProductoRepository : IProductoRepository 
     {
         private readonly DapperContext _context;
+        private readonly ApplicationDbContext _appcontext;
 
-        public ProductoRepository(DapperContext context)
+
+        public ProductoRepository(DapperContext context, ApplicationDbContext appcontext)
         {
             _context = context;
+            _appcontext = appcontext;
         }
 
-        public int Count()
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<int> CountAsync()
+        public async Task<IEnumerable<ProductoDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
-        }
+            var productos = await _appcontext.Productos
+            .Include(p => p.Tipo_Producto_Venta) // Incluir la relación
+            .ToListAsync();
 
-        public bool Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Producto Get(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Producto> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Producto>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Producto> GetAllWithPagination(int pageNumber, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Producto>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Producto> GetAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Insert(Producto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> InsertAsync(Producto productos)
-        {
-            using (var connection = _context.CreateConnection())
+            return productos.Select(p => new ProductoDto
             {
-                var query = "ProductosInsert";
-                var parameters = new DynamicParameters();
-                //parameters.Add("CustomerId", productos.);
-               
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Activo = p.Activo,
+                Tipo_Producto_Venta_Id = p.Tipo_Producto_Venta.Id,
+                Tipo_Producto_Venta_Nombre = p.Tipo_Producto_Venta.Nombre
+            }).ToList();
 
-                var result = await connection.ExecuteAsync(query, param: parameters, commandType: CommandType.StoredProcedure);
-                return result > 0;
-            }
+
+            //return productos;
         }
 
-        public bool Update(Producto entity)
+        public async Task<int> CountAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync(Producto entity)
+
+        public async Task<bool> DeleteAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> InsertAsync(ProductoDto producto)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<bool> UpdateAsync(ProductoDto entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ProductoDto> IGenericRepository<ProductoDto>.GetAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<ProductoDto>> IGenericRepository<ProductoDto>.GetAllWithPaginationAsync(int pageNumber, int pageSize)
         {
             throw new NotImplementedException();
         }

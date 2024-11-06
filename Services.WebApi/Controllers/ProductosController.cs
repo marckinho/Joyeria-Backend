@@ -1,5 +1,5 @@
-﻿using ApplicationUseCases.Customers.Commands.CreateCustomerCommand;
-using ApplicationUseCases.Productos.Commands.CreateProductoCommand;
+﻿using ApplicationUseCases.Productos.Commands.CreateProductoCommand;
+using ApplicationUseCases.Productos.Queries.GetAllProductoQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +21,17 @@ namespace Services.WebApi.Controllers
                 return BadRequest();
 
             var response = await _mediator.Send(command);
+
+            if (response.IsSuccess)
+                return Ok(response);
+
+            return BadRequest(response.Message);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var response = await _mediator.Send(new GetAllProductoQuery());
 
             if (response.IsSuccess)
                 return Ok(response);

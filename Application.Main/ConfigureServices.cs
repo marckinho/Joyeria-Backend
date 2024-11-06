@@ -21,7 +21,7 @@ namespace ApplicationUseCases
             services.AddScoped<IDiscountApplication, DiscountApplication>();*/
 
 
-            services.AddTransient<UsersDtoValidator>();
+            services.AddTransient<UsuariosDtoValidator>();
             services.AddTransient<DiscountDtoValidator>();
 
             return services;

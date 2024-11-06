@@ -5,7 +5,7 @@ namespace Aplication.Interface.Persistence
 {
     public interface IGenericRepository<T> where T: class
     {
-        #region sync methods
+       /* #region sync methods
         bool Insert(T entity);
         bool Update(T entity);
         bool Delete(string id);
@@ -15,7 +15,7 @@ namespace Aplication.Interface.Persistence
         IEnumerable<T> GetAllWithPagination(int pageNumber,int pageSize);
 
         int Count();
-        #endregion
+        #endregion*/
 
         Task<bool> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);

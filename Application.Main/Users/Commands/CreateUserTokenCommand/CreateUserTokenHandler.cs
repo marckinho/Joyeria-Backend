@@ -2,16 +2,11 @@
 using Application.DTO;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Transversal.Common;
 
 namespace ApplicationUseCases.Users.Commands.CreateUserTokenCommand
 {
-    public class CreateUserTokenHandler : IRequestHandler<CreateUserTokenCommand, Response<UserDto>>
+    public class CreateUserTokenHandler : IRequestHandler<CreateUserTokenCommand, Response<UsuarioDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -22,10 +17,10 @@ namespace ApplicationUseCases.Users.Commands.CreateUserTokenCommand
             _mapper = mapper;
         }
 
-        public async Task<Response<UserDto>> Handle(CreateUserTokenCommand request, CancellationToken cancellationToken)
+        public async Task<Response<UsuarioDto>> Handle(CreateUserTokenCommand request, CancellationToken cancellationToken)
         {
-            var response = new Response<UserDto>();
-            var user = await _unitOfWork.Users.Authenticate(request.UserName, request.Password);
+            var response = new Response<UsuarioDto>();
+            var user = await _unitOfWork.Usuarios.Authenticate(request.UserName, request.Pwd);
 
             if(user is null)
             {
@@ -34,7 +29,7 @@ namespace ApplicationUseCases.Users.Commands.CreateUserTokenCommand
                 return response;
             }
 
-            response.Data = _mapper.Map<UserDto>(user);
+            response.Data = _mapper.Map<UsuarioDto>(user);
             response.IsSuccess = true;
             response.Message = "Autenticacion exitosa!";
 
