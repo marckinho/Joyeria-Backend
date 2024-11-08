@@ -5,22 +5,22 @@ using Dapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
+using System;
 using System.Data;
+using System.Threading;
 
 namespace Persistence.Repositories
 {
     public class ProductoRepository : IProductoRepository 
     {
-        private readonly DapperContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _appcontext;
 
 
-        public ProductoRepository(DapperContext context, ApplicationDbContext appcontext)
+        public ProductoRepository(ApplicationDbContext appcontext)
         {
-            _context = context;
             _appcontext = appcontext;
         }
-
 
         public async Task<IEnumerable<ProductoDto>> GetAllAsync()
         {
@@ -37,8 +37,6 @@ namespace Persistence.Repositories
                 Tipo_Producto_Venta_Nombre = p.Tipo_Producto_Venta.Nombre
             }).ToList();
 
-
-            //return productos;
         }
 
         public async Task<int> CountAsync()
@@ -52,23 +50,29 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> InsertAsync(ProductoDto producto)
+        public async Task<bool> InsertAsync(Producto producto)
+        {
+            await _appcontext.AddAsync(producto);
+           
+            return true;
+        }
+
+        public Task<bool> UpdateAsync(Producto entity)
         {
             throw new NotImplementedException();
         }
 
-
-        public Task<bool> UpdateAsync(ProductoDto entity)
+        public Task<Producto> GetAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        Task<ProductoDto> IGenericRepository<ProductoDto>.GetAsync(string id)
+        public Task<IEnumerable<Producto>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
         {
             throw new NotImplementedException();
         }
 
-        Task<IEnumerable<ProductoDto>> IGenericRepository<ProductoDto>.GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAllAsync()
         {
             throw new NotImplementedException();
         }

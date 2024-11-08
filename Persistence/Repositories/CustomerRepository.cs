@@ -15,8 +15,8 @@ namespace Persistence.Repositories
             _context=context;
         }
 
-        /*#region Metodos Sincronos
-
+        #region Metodos Sincronos
+        /*
         public bool Insert(Customer customers)
         {
             using (var connection =_context.CreateConnection()) {
@@ -121,8 +121,8 @@ namespace Persistence.Repositories
             var count = connection.ExecuteScalar<int>(query, commandType: CommandType.Text);
             return count;
         }
-
-        #endregion*/
+        */
+        #endregion
 
         #region Metodos Asincronos
 

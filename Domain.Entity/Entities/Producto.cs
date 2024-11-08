@@ -13,4 +13,3 @@ namespace Domain.Entities
         public Tipo_Producto_Venta Tipo_Producto_Venta { get; set; }
     }
 }
-//public Tipo_Producto_Venta Tipo_Producto_Venta { get; set; }

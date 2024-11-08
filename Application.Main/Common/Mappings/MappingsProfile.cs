@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using ApplicationUseCases.Customers.Commands.CreateCustomerCommand;
 using ApplicationUseCases.Customers.Commands.UpdateCustomerCommand;
+using ApplicationUseCases.Productos.Commands.CreateProductoCommand;
 using AutoMapper;
 using Domain.Entities;
 
@@ -28,6 +29,12 @@ namespace ApplicationUseCases.Common.Mappings
                        opt => opt.MapFrom(src => src.Tipo_Producto_Venta.Id)) // Mapea solo el ID de TipoProductoVenta
             .ForMember(dest => dest.Tipo_Producto_Venta_Nombre,
                opt => opt.MapFrom(src => src.Tipo_Producto_Venta.Nombre));
+
+            CreateMap<CreateProductoCommand, Producto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
+            .ForMember(dest => dest.Tipo_Producto_Venta_Id, opt => opt.MapFrom(src => src.Tipo_Producto_Venta_Id))
+            .ForMember(dest => dest.Activo, opt => opt.MapFrom(src => src.Activo));
 
         }
     }

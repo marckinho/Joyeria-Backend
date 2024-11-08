@@ -24,12 +24,16 @@ namespace Persistence.Contexts
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
 
-            builder.Entity<Producto>()
+            /*builder.Entity<Producto>()
             .Property(c => c.Activo)
             .HasConversion(
                 v => v ? (byte)1 : (byte)0, // Conversión de `bool` a `byte` al guardar
                 v => v == 1 // Conversión de `byte` a `bool` al leer
-            );
+            );*/
+
+            /*builder.Entity<Producto>()
+            .Property(p => p.Activo)
+            .HasColumnType("bit");*/
 
             builder.Entity<Producto>()
             .HasOne(p => p.Tipo_Producto_Venta)  // Relación de Producto a TipoProductoVenta
