@@ -1,6 +1,6 @@
-﻿namespace Application.DTO
+﻿namespace Application.DTO.ProductosDto
 {
-    public class ProductoDto
+    public class ListaProductosDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

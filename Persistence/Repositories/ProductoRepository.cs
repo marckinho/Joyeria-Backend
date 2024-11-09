@@ -1,13 +1,10 @@
 ﻿using Aplication.Interface.Persistence;
-using Application.DTO;
+using Application.DTO.ProductosDto;
 using Application.Interface.Persistence;
-using Dapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using System;
 using System.Data;
-using System.Threading;
 
 namespace Persistence.Repositories
 {
@@ -22,13 +19,13 @@ namespace Persistence.Repositories
             _appcontext = appcontext;
         }
 
-        public async Task<IEnumerable<ProductoDto>> GetAllAsync()
+        public async Task<IEnumerable<ListaProductosDto>> GetAllAsync()
         {
             var productos = await _appcontext.Productos
             .Include(p => p.Tipo_Producto_Venta) // Incluir la relación
             .ToListAsync();
 
-            return productos.Select(p => new ProductoDto
+            return productos.Select(p => new ListaProductosDto
             {
                 Id = p.Id,
                 Nombre = p.Nombre,
@@ -44,22 +41,28 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
-
         public async Task<bool> DeleteAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> InsertAsync(Producto producto)
+        public async Task<bool> UpdateAsync(Producto producto)
         {
-            await _appcontext.AddAsync(producto);
-           
-            return true;
-        }
+            var productoExistente = await _appcontext.Productos.FindAsync(producto.Id);
 
-        public Task<bool> UpdateAsync(Producto entity)
-        {
-            throw new NotImplementedException();
+            if (productoExistente == null)
+            {
+                return false;  // No se encontró el producto
+            }
+
+            productoExistente.Nombre = producto.Nombre;
+            productoExistente.Tipo_Producto_Venta_Id = producto.Tipo_Producto_Venta_Id;
+            productoExistente.Activo = producto.Activo;
+
+            await _appcontext.AddAsync(productoExistente);
+
+            return true;
+
         }
 
         public Task<Producto> GetAsync(string id)
@@ -75,6 +78,13 @@ namespace Persistence.Repositories
         Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAllAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> InsertAsync(Producto producto)
+        {
+            await _appcontext.AddAsync(producto);
+
+            return true;
         }
     }
 }

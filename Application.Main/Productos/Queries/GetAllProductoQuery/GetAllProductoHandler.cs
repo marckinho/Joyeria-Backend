@@ -1,5 +1,5 @@
 ﻿using Aplication.Interface.Persistence;
-using Application.DTO;
+using Application.DTO.ProductosDto;
 using AutoMapper;
 using MediatR;
 using Transversal.Common;
@@ -7,7 +7,7 @@ using Transversal.Common;
 namespace ApplicationUseCases.Productos.Queries.GetAllProductoQuery
 {
 
-    public class GetAllProductoHandler : IRequestHandler<GetAllProductoQuery, Response<IEnumerable<ProductoDto>>>
+    public class GetAllProductoHandler : IRequestHandler<GetAllProductoQuery, Response<IEnumerable<ListaProductosDto>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -18,12 +18,12 @@ namespace ApplicationUseCases.Productos.Queries.GetAllProductoQuery
             _mapper = mapper;
         }
 
-        public async Task<Response<IEnumerable<ProductoDto>>> Handle(GetAllProductoQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<ListaProductosDto>>> Handle(GetAllProductoQuery request, CancellationToken cancellationToken)
         {
-            var response = new Response<IEnumerable<ProductoDto>>();
+            var response = new Response<IEnumerable<ListaProductosDto>>();
 
             var productos = await _unitOfWork.Productos.GetAllAsync();
-            response.Data = _mapper.Map<List<ProductoDto>>(productos);
+            response.Data = _mapper.Map<List<ListaProductosDto>>(productos);
             if (response.Data != null)
             {
                 response.IsSuccess = true;
