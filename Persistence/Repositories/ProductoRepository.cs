@@ -1,61 +1,71 @@
-﻿using Application.Interface.Persistence;
-using Dapper;
+﻿using Aplication.Interface.Persistence;
+using Application.DTO.ProductosDto;
+using Application.Interface.Persistence;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class ProductoRepository : IProductoRepository
+    public class ProductoRepository : IProductoRepository 
     {
-        private readonly DapperContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _appcontext;
 
-        public ProductoRepository(DapperContext context)
+
+        public ProductoRepository(ApplicationDbContext appcontext)
         {
-            _context = context;
+            _appcontext = appcontext;
         }
 
-        public int Count()
+        public async Task<IEnumerable<ListaProductosDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var productos = await _appcontext.Productos
+            .Include(p => p.Tipo_Producto_Venta) // Incluir la relación
+            .ToListAsync();
+
+            return productos.Select(p => new ListaProductosDto
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Activo = p.Activo,
+                Tipo_Producto_Venta_Id = p.Tipo_Producto_Venta.Id,
+                Tipo_Producto_Venta_Nombre = p.Tipo_Producto_Venta.Nombre
+            }).ToList();
+
         }
 
-        public Task<int> CountAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Producto Get(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Producto> GetAll()
+        public async Task<int> CountAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Producto>> GetAllAsync()
+        public async Task<bool> DeleteAsync(string id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Producto> GetAllWithPagination(int pageNumber, int pageSize)
+        public async Task<bool> UpdateAsync(Producto producto)
+        {
+            var productoExistente = await _appcontext.Productos.FindAsync(producto.Id);
+
+            if (productoExistente == null)
+            {
+                return false;  // No se encontró el producto
+            }
+
+            productoExistente.Nombre = producto.Nombre;
+            productoExistente.Tipo_Producto_Venta_Id = producto.Tipo_Producto_Venta_Id;
+            productoExistente.Activo = producto.Activo;
+
+            await _appcontext.AddAsync(productoExistente);
+
+            return true;
+
+        }
+
+        public Task<Producto> GetAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -65,38 +75,16 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Producto> GetAsync(string id)
+        Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public bool Insert(Producto entity)
+        public async Task<bool> InsertAsync(Producto producto)
         {
-            throw new NotImplementedException();
-        }
+            await _appcontext.AddAsync(producto);
 
-        public async Task<bool> InsertAsync(Producto productos)
-        {
-            using (var connection = _context.CreateConnection())
-            {
-                var query = "ProductosInsert";
-                var parameters = new DynamicParameters();
-                //parameters.Add("CustomerId", productos.);
-               
-
-                var result = await connection.ExecuteAsync(query, param: parameters, commandType: CommandType.StoredProcedure);
-                return result > 0;
-            }
-        }
-
-        public bool Update(Producto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync(Producto entity)
-        {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

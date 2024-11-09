@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
     public class Producto
     {
-        int Id {  get; set; }
-        string Nombre { get; set; }
+        public int Id {  get; set; }
+        public string Nombre { get; set; }
+        public int Tipo_Producto_Venta_Id { get; set; }
+        public bool Activo { get; set; }
+
+        [JsonIgnore]
+        public Tipo_Producto_Venta Tipo_Producto_Venta { get; set; }
     }
 }

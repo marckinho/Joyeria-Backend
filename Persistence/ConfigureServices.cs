@@ -16,11 +16,12 @@ namespace Persistence
             services.AddSingleton<DapperContext>();
             services.AddScoped<AuditableEntitySaveChangesInterceptor>();
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("NorthwindConnection"),
+                options.UseSqlServer(configuration.GetConnectionString("JoyeriaConnection"),
                 builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             services.AddScoped<ICustomersRepository, CustomerRepository>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUsuariosRepository, UsuariosRepository>();
             services.AddScoped<IDiscountRepository,DiscountRepository>();
+            services.AddScoped<IProductoRepository, ProductoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;

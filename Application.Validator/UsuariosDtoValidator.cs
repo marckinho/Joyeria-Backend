@@ -3,12 +3,12 @@ using FluentValidation;
 
 namespace Application.Validator
 {
-    public class UsersDtoValidator : AbstractValidator<UserDto>
+    public class UsuariosDtoValidator : AbstractValidator<UsuarioDto>
     {
-        public UsersDtoValidator() 
+        public UsuariosDtoValidator() 
         { 
             RuleFor(u=>u.UserName).NotNull().NotEmpty();
-            RuleFor(u => u.Password).NotNull().NotEmpty();
+            RuleFor(u => u.Pwd).NotNull().NotEmpty();
         }
     }
 }

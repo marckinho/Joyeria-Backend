@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Transversal.Common;
 
-namespace ApplicationUseCases.Productos.Commands.CreateProductoCommand
+namespace ApplicationUseCases.Productos.Commands.UpdateProductoCommand
 {
-    public class CreateProductoCommand : IRequest<Response<bool>>
+    public class UpdateProductoCommand : IRequest<Response<bool>>
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

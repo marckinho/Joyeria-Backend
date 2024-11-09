@@ -7,17 +7,18 @@ namespace Persistence.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         public ICustomersRepository Customers { get; }
-        public IUsersRepository Users { get; }
+        public IUsuariosRepository Usuarios { get; }
         public IDiscountRepository Discounts {  get; }
         public IProductoRepository Productos { get; }
 
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public UnitOfWork(ICustomersRepository customers,IUsersRepository users,IDiscountRepository discounts, ApplicationDbContext applicationDbContext) 
+        public UnitOfWork(ICustomersRepository customers,IUsuariosRepository usuarios,IDiscountRepository discounts,IProductoRepository productos, ApplicationDbContext applicationDbContext) 
         {
             Customers = customers;
-            Users = users;
+            Usuarios = usuarios;
             Discounts = discounts;
+            Productos = productos;
             _applicationDbContext = applicationDbContext;
         }
 
