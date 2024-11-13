@@ -2,6 +2,7 @@
 using ApplicationUseCases.Productos.Commands.DeleteProductoCommand;
 using ApplicationUseCases.Productos.Commands.UpdateProductoCommand;
 using ApplicationUseCases.Productos.Queries.GetAllProductoQuery;
+using ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuery;
 using ApplicationUseCases.Productos.Queries.GetProductoQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -90,6 +91,16 @@ namespace Services.WebApi.Controllers
         {
             var response = await _mediator.Send(new GetAllProductoQuery());
 
+            if (response.IsSuccess)
+                return Ok(response);
+
+            return BadRequest(response.Message);
+        }
+
+        [HttpGet("GetAllPaginated")]
+        public async Task<IActionResult> GetAllPaginated([FromQuery] int pageNumber, int pageSize)
+        {
+            var response = await _mediator.Send(new GetAllPaginatedProductoQuery() { PageNumber = pageNumber, PageSize = pageSize });
             if (response.IsSuccess)
                 return Ok(response);
 
