@@ -22,7 +22,7 @@ namespace ApplicationUseCases.Productos.Queries.GetAllProductoQuery
         {
             var response = new Response<IEnumerable<ListaProductosDto>>();
 
-            var productos = await _unitOfWork.Productos.GetAllAsync();
+            var productos = await _unitOfWork.Productos.GetAsync();
             response.Data = _mapper.Map<List<ListaProductosDto>>(productos);
             if (response.Data != null)
             {

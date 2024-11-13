@@ -7,10 +7,10 @@ namespace Aplication.Interface.Persistence
     {
         Task<bool> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);
-        Task<bool> DeleteAsync(string id);
+        Task<bool> DeleteAsync(int id);
 
-        Task<T> GetAsync(string id);
-        Task<IEnumerable<T>> GetAllAsync();
+        //Task<T> GetAsync(int id);
+        //Task<IEnumerable<T>> GetAsync();
 
         Task<IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
 

@@ -6,7 +6,7 @@ namespace ApplicationUseCases.Customers.Queries.GetCustomerQuery
 {
     public sealed record GetCustomerQuery : IRequest<Response<CustomerDto>>
     {
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
 
         /*public GetCustomerQuery(string customerId)
         {

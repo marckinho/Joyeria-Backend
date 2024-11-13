@@ -38,7 +38,7 @@ namespace Services.WebApi.Controllers
         }
 
         [HttpPut("Update/{customerId}")]
-        public async Task<IActionResult> Update(string customerId, [FromBody] UpdateCustomerCommand command)
+        public async Task<IActionResult> Update(int customerId, [FromBody] UpdateCustomerCommand command)
         {
             var customerDto = await _mediator.Send(new GetCustomerQuery() { CustomerId = customerId });
             
@@ -57,9 +57,9 @@ namespace Services.WebApi.Controllers
         }
 
         [HttpDelete("Delete/{customerId}")]
-        public async Task<IActionResult> Delete([FromRoute] string customerId)
+        public async Task<IActionResult> Delete([FromRoute] int customerId)
         {
-            if (string.IsNullOrEmpty(customerId))
+            if (customerId <= 0)
                 return BadRequest();
 
             var response = await _mediator.Send(new DeleteCustomerCommand() { CustomerId=customerId });
@@ -71,9 +71,9 @@ namespace Services.WebApi.Controllers
         }
 
         [HttpGet("Get/{customerId}")]
-        public async Task<IActionResult> Get([FromRoute] string customerId)
+        public async Task<IActionResult> Get([FromRoute] int customerId)
         {
-            if (string.IsNullOrEmpty(customerId))
+            if (customerId <= 0)
                 return BadRequest();
 
             var response = await  _mediator.Send(new GetCustomerQuery() { CustomerId=customerId});

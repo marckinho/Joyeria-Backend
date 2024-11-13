@@ -14,13 +14,11 @@ namespace Persistence.Contexts
             _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
         }
 
-        public DbSet<Discount> Discounts { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Tipo_Producto_Venta> Tipo_Producto_Venta { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Discount>().ToTable("Discounts");
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
 

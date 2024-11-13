@@ -20,7 +20,6 @@ namespace Persistence
                 builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             services.AddScoped<ICustomersRepository, CustomerRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
-            services.AddScoped<IDiscountRepository,DiscountRepository>();
             services.AddScoped<IProductoRepository, ProductoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

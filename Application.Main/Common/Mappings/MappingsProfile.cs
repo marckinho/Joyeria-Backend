@@ -15,8 +15,8 @@ namespace ApplicationUseCases.Common.Mappings
         {
             CreateMap<Customer, CustomerDto>().ReverseMap();
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
-            CreateMap<Discount, DiscountDto>().ReverseMap();
 
+            CreateMap<Producto, ProductoDto>().ReverseMap();
             CreateMap<Producto, ListaProductosDto>().ReverseMap();
             
             CreateMap<Producto, CreateProductoCommand>().ReverseMap();

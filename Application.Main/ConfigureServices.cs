@@ -22,7 +22,6 @@ namespace ApplicationUseCases
 
 
             services.AddTransient<UsuariosDtoValidator>();
-            services.AddTransient<DiscountDtoValidator>();
 
             return services;
         }
