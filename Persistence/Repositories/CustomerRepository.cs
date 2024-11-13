@@ -1,4 +1,5 @@
 ﻿using Aplication.Interface.Persistence;
+using Application.DTO.ProductosDto;
 using Dapper;
 using Domain.Entities;
 using Persistence.Contexts;
@@ -172,7 +173,7 @@ namespace Persistence.Repositories
             }
         }
 
-        public async Task<bool> DeleteAsync(string customerId)
+        public async Task<bool> DeleteAsync(int customerId)
         {
             using (var connection = _context.CreateConnection())
             {
@@ -186,7 +187,7 @@ namespace Persistence.Repositories
             }
         }
 
-        public async Task<Customer> GetAsync(string customerId)
+        public async Task<Customer> GetAsync(int customerId)
         {
             using (var connection = _context.CreateConnection())
             {
@@ -200,7 +201,7 @@ namespace Persistence.Repositories
             }
         }
 
-        public async Task<IEnumerable<Customer>> GetAllAsync()
+        public async Task<IEnumerable<Customer>> GetAsync()
         {
             using (var connection = _context.CreateConnection())
             {
@@ -231,6 +232,11 @@ namespace Persistence.Repositories
 
             var count = await connection.ExecuteScalarAsync<int>(query, commandType: CommandType.Text);
             return count;
+        }
+
+        Task<IEnumerable<ListaProductosDto>> ICustomersRepository.GetAsync(int customerId)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

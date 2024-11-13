@@ -1,9 +1,12 @@
-﻿using MediatR;
-using Transversal.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ApplicationUseCases.Productos.Commands.UpdateProductoCommand
+namespace Application.DTO.ProductosDto
 {
-    public sealed record UpdateProductoCommand : IRequest<Response<bool>>
+    public class ProductoDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

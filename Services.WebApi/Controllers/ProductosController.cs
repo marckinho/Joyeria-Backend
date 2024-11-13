@@ -1,6 +1,8 @@
 ﻿using ApplicationUseCases.Productos.Commands.CreateProductoCommand;
+using ApplicationUseCases.Productos.Commands.DeleteProductoCommand;
 using ApplicationUseCases.Productos.Commands.UpdateProductoCommand;
 using ApplicationUseCases.Productos.Queries.GetAllProductoQuery;
+using ApplicationUseCases.Productos.Queries.GetProductoQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,13 +31,13 @@ namespace Services.WebApi.Controllers
             return BadRequest(response.Message);
         }
 
-        [HttpPost("Update")]
-        public async Task<IActionResult> Update( [FromBody] UpdateProductoCommand command)
+        [HttpPost("Update/{productoId}")]
+        public async Task<IActionResult> Update(int Id, [FromBody] UpdateProductoCommand command)
         {
-            /*var producto = await _mediator.Send(new GetCustomerQuery() { CustomerId = customerId });
+            var productoDto = await _mediator.Send(new GetProductoQuery() { Id = Id });
 
-            if (customerDto.Data == null)
-                return NotFound(customerDto.Message);*/
+            if (productoDto.Data == null)
+                return NotFound(productoDto.Message);
 
             if (command == null)
                 return BadRequest();
@@ -44,6 +46,41 @@ namespace Services.WebApi.Controllers
 
             if (response.IsSuccess)
                 return Ok(response);
+
+            return BadRequest(response.Message);
+        }
+
+        [HttpDelete("Delete/{productoId}")]
+        public async Task<IActionResult> Delete([FromRoute] int productoId)
+        {
+            if (productoId <= 0)
+                return BadRequest();
+
+            var response = await _mediator.Send(new DeleteProductoCommand() { productoId = productoId });
+
+            if (response.IsSuccess)
+                return Ok(response);
+
+            return BadRequest(response.Message);
+        }
+
+        [HttpGet("Get/{productoId}")]
+        public async Task<IActionResult> Get([FromRoute] int productoId)
+        {
+            if (productoId <= 0)
+                return BadRequest();
+
+            var response = await _mediator.Send(new GetProductoQuery() { Id = productoId });
+
+            if (response.IsSuccess)
+            {
+                if (response.Data != null)
+                {
+                    return Ok(response);
+                }
+                else
+                    return NotFound(response);
+            }
 
             return BadRequest(response.Message);
         }

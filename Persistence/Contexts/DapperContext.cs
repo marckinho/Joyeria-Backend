@@ -17,7 +17,7 @@ namespace Persistence.Contexts
 
         
 
-        public DapperContext(IConfiguration configuration)
+          public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
             _connectionString = configuration.GetConnectionString("JoyeriaConnection");

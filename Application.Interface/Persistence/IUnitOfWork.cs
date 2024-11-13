@@ -7,7 +7,6 @@ namespace Aplication.Interface.Persistence
     {
         ICustomersRepository Customers { get; }
         IUsuariosRepository Usuarios { get; }
-        IDiscountRepository Discounts { get; }
         IProductoRepository Productos { get; }
         Task<int> Save(CancellationToken cancellationToken);
     }

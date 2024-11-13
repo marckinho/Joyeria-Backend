@@ -8,16 +8,14 @@ namespace Persistence.Repositories
     {
         public ICustomersRepository Customers { get; }
         public IUsuariosRepository Usuarios { get; }
-        public IDiscountRepository Discounts {  get; }
         public IProductoRepository Productos { get; }
 
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public UnitOfWork(ICustomersRepository customers,IUsuariosRepository usuarios,IDiscountRepository discounts,IProductoRepository productos, ApplicationDbContext applicationDbContext) 
+        public UnitOfWork(ICustomersRepository customers,IUsuariosRepository usuarios,IProductoRepository productos, ApplicationDbContext applicationDbContext) 
         {
             Customers = customers;
             Usuarios = usuarios;
-            Discounts = discounts;
             Productos = productos;
             _applicationDbContext = applicationDbContext;
         }

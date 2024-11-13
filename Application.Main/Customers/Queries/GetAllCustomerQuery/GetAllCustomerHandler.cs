@@ -21,7 +21,7 @@ namespace ApplicationUseCases.Customers.Queries.GetAllCustomerQuery
         {
             var response = new Response<IEnumerable<CustomerDto>>();
 
-            var customers = await _unitOfWork.Customers.GetAllAsync();
+            var customers = await _unitOfWork.Customers.GetAsync();
             response.Data = _mapper.Map<IEnumerable<CustomerDto>>(customers);
             if (response.Data != null)
             {

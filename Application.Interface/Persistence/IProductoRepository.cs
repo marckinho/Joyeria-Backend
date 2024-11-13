@@ -6,6 +6,6 @@ namespace Application.Interface.Persistence
 {
     public interface IProductoRepository : IGenericRepository<Producto>
     {
-        Task<IEnumerable<ListaProductosDto>> GetAllAsync();
+        Task<IEnumerable<ListaProductosDto>> GetAsync(int id=0);
     }
 }

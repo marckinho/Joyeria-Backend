@@ -1,5 +1,4 @@
-﻿using Aplication.Interface.Persistence;
-using Application.DTO.ProductosDto;
+﻿using Application.DTO.ProductosDto;
 using Application.Interface.Persistence;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,20 +9,62 @@ namespace Persistence.Repositories
 {
     public class ProductoRepository : IProductoRepository 
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _appcontext;
-
 
         public ProductoRepository(ApplicationDbContext appcontext)
         {
             _appcontext = appcontext;
         }
 
-        public async Task<IEnumerable<ListaProductosDto>> GetAllAsync()
+        public async Task<int> CountAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> DeleteAsync(int productoId)
+        {
+            var producto = await _appcontext.Productos.FindAsync(productoId);
+
+            if (producto == null)
+            {
+                return false;
+            }
+
+            _appcontext.Productos.Remove(producto);
+            await _appcontext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> UpdateAsync(Producto producto)
+        {
+            var productoExistente = await _appcontext.Productos.FindAsync(producto.Id);
+
+            if (productoExistente == null)
+            {
+                return false;  
+            }
+
+            productoExistente.Nombre = producto.Nombre;
+            productoExistente.Tipo_Producto_Venta_Id = producto.Tipo_Producto_Venta_Id;
+            productoExistente.Activo = producto.Activo;
+
+            _appcontext.Update(productoExistente);
+
+            await _appcontext.SaveChangesAsync();
+
+            return true;
+
+        }
+
+        public async Task<IEnumerable<ListaProductosDto>> GetAsync(int id)
         {
             var productos = await _appcontext.Productos
-            .Include(p => p.Tipo_Producto_Venta) // Incluir la relación
+            .Include(p => p.Tipo_Producto_Venta)
             .ToListAsync();
+
+            if(id>0)
+                productos = productos.Where(p => p.Id == id).ToList();
 
             return productos.Select(p => new ListaProductosDto
             {
@@ -33,49 +74,9 @@ namespace Persistence.Repositories
                 Tipo_Producto_Venta_Id = p.Tipo_Producto_Venta.Id,
                 Tipo_Producto_Venta_Nombre = p.Tipo_Producto_Venta.Nombre
             }).ToList();
-
-        }
-
-        public async Task<int> CountAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> DeleteAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> UpdateAsync(Producto producto)
-        {
-            var productoExistente = await _appcontext.Productos.FindAsync(producto.Id);
-
-            if (productoExistente == null)
-            {
-                return false;  // No se encontró el producto
-            }
-
-            productoExistente.Nombre = producto.Nombre;
-            productoExistente.Tipo_Producto_Venta_Id = producto.Tipo_Producto_Venta_Id;
-            productoExistente.Activo = producto.Activo;
-
-            await _appcontext.AddAsync(productoExistente);
-
-            return true;
-
-        }
-
-        public Task<Producto> GetAsync(string id)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<Producto>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAllAsync()
         {
             throw new NotImplementedException();
         }
@@ -85,6 +86,11 @@ namespace Persistence.Repositories
             await _appcontext.AddAsync(producto);
 
             return true;
+        }
+
+        public Task<IEnumerable<ListaProductosDto>> GetAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

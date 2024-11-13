@@ -45,7 +45,7 @@ namespace Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(string id)
+        public Task<bool> DeleteAsync(int id)
         {
             throw new System.NotImplementedException();
         }
@@ -75,7 +75,7 @@ namespace Persistence.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task<Usuario> GetAsync(string id)
+        public Task<Usuario> GetAsync(int id)
         {
             throw new System.NotImplementedException();
         }
