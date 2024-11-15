@@ -40,10 +40,20 @@ namespace Services.WebApi.Modules.Authentication
                             context.Response.Headers.Add("Token-Expired", "true");
                         }
                         return Task.CompletedTask;
+                    },
+
+                    OnMessageReceived = context =>
+                    {
+                        var token = context.Request.Headers["X-Authorization"].FirstOrDefault(); // Usando un encabezado personalizado
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            context.Token = token;
+                        }
+                        return Task.CompletedTask;
                     }
                 };
                 x.RequireHttpsMetadata = false;
-                x.SaveToken = false;
+                x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,

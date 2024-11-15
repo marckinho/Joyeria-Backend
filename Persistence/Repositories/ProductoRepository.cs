@@ -1,4 +1,5 @@
-﻿using Application.DTO.ProductosDto;
+﻿using Aplication.Interface.Persistence;
+using Application.DTO.ProductosDto;
 using Application.Interface.Persistence;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ namespace Persistence.Repositories
 
         public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int totalProductos = await _appcontext.Productos.CountAsync();
+            return totalProductos;
         }
 
         public async Task<bool> DeleteAsync(int productoId)
@@ -76,9 +78,24 @@ namespace Persistence.Repositories
             }).ToList();
         }
 
-        public Task<IEnumerable<Producto>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<ListaProductosDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
-            throw new NotImplementedException();
+            var productos = await _appcontext.Productos
+                .Where(p => p.Activo && (string.IsNullOrEmpty(productName) || p.Nombre.Contains(productName)))
+                .OrderBy(p => p.Nombre)
+                .Include(p => p.Tipo_Producto_Venta)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return productos.Select(p => new ListaProductosDto
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Activo = p.Activo,
+                Tipo_Producto_Venta_Id = p.Tipo_Producto_Venta.Id,
+                Tipo_Producto_Venta_Nombre = p.Tipo_Producto_Venta.Nombre
+            }).ToList();
         }
 
         public async Task<bool> InsertAsync(Producto producto)
@@ -89,6 +106,11 @@ namespace Persistence.Repositories
         }
 
         public Task<IEnumerable<ListaProductosDto>> GetAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAllWithPaginationAsync(int pageNumber, int pageSize)
         {
             throw new NotImplementedException();
         }

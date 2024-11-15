@@ -6,7 +6,7 @@ using Transversal.Common;
 
 namespace ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuery
 {
-    public class GetAllPaginatedProductoHandler : IRequestHandler<GetAllPaginatedProductoQuery, ResponsePagination<IEnumerable<ProductoDto>>>
+    public class GetAllPaginatedProductoHandler : IRequestHandler<GetAllPaginatedProductoQuery, ResponsePagination<IEnumerable<ListaProductosDto>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -17,14 +17,14 @@ namespace ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuer
             _mapper = mapper;
         }
 
-        public async Task<ResponsePagination<IEnumerable<ProductoDto>>> Handle(GetAllPaginatedProductoQuery request, CancellationToken cancellationToken)
+        public async Task<ResponsePagination<IEnumerable<ListaProductosDto>>> Handle(GetAllPaginatedProductoQuery request, CancellationToken cancellationToken)
         {
-            var response = new ResponsePagination<IEnumerable<ProductoDto>>();
+            var response = new ResponsePagination<IEnumerable<ListaProductosDto>>();
 
-            var count = await _unitOfWork.Customers.CountAsync();
+            var count = await _unitOfWork.Productos.CountAsync();
 
-            var customers = await _unitOfWork.Customers.GetAllWithPaginationAsync(request.PageNumber, request.PageSize);
-            response.Data = _mapper.Map<IEnumerable<ProductoDto>>(customers);
+            var productos = await _unitOfWork.Productos.GetAllWithPaginationAsync(request.PageNumber, request.PageSize, request.ProductName);
+            response.Data = _mapper.Map<IEnumerable<ListaProductosDto>>(productos);
 
             if (response.Data != null)
             {

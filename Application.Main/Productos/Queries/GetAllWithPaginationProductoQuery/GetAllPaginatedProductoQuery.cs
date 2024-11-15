@@ -4,9 +4,10 @@ using Transversal.Common;
 
 namespace ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuery
 {
-    public sealed record GetAllPaginatedProductoQuery :IRequest<ResponsePagination<IEnumerable<ProductoDto>>>
+    public sealed record GetAllPaginatedProductoQuery :IRequest<ResponsePagination<IEnumerable<ListaProductosDto>>>
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public string ProductName { get; set; }
     }
 }
