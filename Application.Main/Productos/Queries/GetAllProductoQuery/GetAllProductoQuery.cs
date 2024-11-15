@@ -4,7 +4,7 @@ using Transversal.Common;
 
 namespace ApplicationUseCases.Productos.Queries.GetAllProductoQuery
 {
-    public sealed record GetAllProductoQuery : IRequest<Response<IEnumerable<ListaProductosDto>>>
+    public sealed record GetAllProductoQuery : IRequest<Response<IEnumerable<ProductoDto>>>
     {
     }
 }

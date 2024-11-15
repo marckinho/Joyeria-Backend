@@ -38,7 +38,7 @@ namespace Persistence.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateAsync(Producto producto)
+        public async Task<bool> UpdateAsync(ProductoDto producto)
         {
             var productoExistente = await _appcontext.Productos.FindAsync(producto.Id);
 
@@ -59,7 +59,7 @@ namespace Persistence.Repositories
 
         }
 
-        public async Task<IEnumerable<ListaProductosDto>> GetAsync(int id)
+        public async Task<IEnumerable<ProductoDto>> GetAsync(int id)
         {
             var productos = await _appcontext.Productos
             .Include(p => p.Tipo_Producto_Venta)
@@ -68,7 +68,7 @@ namespace Persistence.Repositories
             if(id>0)
                 productos = productos.Where(p => p.Id == id).ToList();
 
-            return productos.Select(p => new ListaProductosDto
+            return productos.Select(p => new ProductoDto
             {
                 Id = p.Id,
                 Nombre = p.Nombre,
@@ -78,7 +78,7 @@ namespace Persistence.Repositories
             }).ToList();
         }
 
-        public async Task<IEnumerable<ListaProductosDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
+        public async Task<IEnumerable<ProductoDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
             var productos = await _appcontext.Productos
                 .Where(p => p.Activo && (string.IsNullOrEmpty(productName) || p.Nombre.Contains(productName)))
@@ -88,7 +88,7 @@ namespace Persistence.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return productos.Select(p => new ListaProductosDto
+            return productos.Select(p => new ProductoDto
             {
                 Id = p.Id,
                 Nombre = p.Nombre,
@@ -98,21 +98,11 @@ namespace Persistence.Repositories
             }).ToList();
         }
 
-        public async Task<bool> InsertAsync(Producto producto)
+        public async Task<bool> InsertAsync(ProductoDto producto)
         {
             await _appcontext.AddAsync(producto);
 
             return true;
-        }
-
-        public Task<IEnumerable<ListaProductosDto>> GetAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAllWithPaginationAsync(int pageNumber, int pageSize)
-        {
-            throw new NotImplementedException();
         }
     }
 }

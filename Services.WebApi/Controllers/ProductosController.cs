@@ -36,7 +36,7 @@ namespace Services.WebApi.Controllers
             return BadRequest(response.Message);
         }
 
-        [HttpPost("Update/{productoId}")]
+        [HttpPost("Update/{Id}")]
         public async Task<IActionResult> Update(int Id, [FromBody] UpdateProductoCommand command)
         {
             var productoDto = await _mediator.Send(new GetProductoQuery() { Id = Id });

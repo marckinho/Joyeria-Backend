@@ -239,6 +239,16 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        Task<IEnumerable<Customer>> IGenericRepository<Customer>.GetAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Customer>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

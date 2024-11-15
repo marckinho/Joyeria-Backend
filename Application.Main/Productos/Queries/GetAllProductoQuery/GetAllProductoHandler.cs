@@ -7,7 +7,7 @@ using Transversal.Common;
 namespace ApplicationUseCases.Productos.Queries.GetAllProductoQuery
 {
 
-    public class GetAllProductoHandler : IRequestHandler<GetAllProductoQuery, Response<IEnumerable<ListaProductosDto>>>
+    public class GetAllProductoHandler : IRequestHandler<GetAllProductoQuery, Response<IEnumerable<ProductoDto>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -18,12 +18,12 @@ namespace ApplicationUseCases.Productos.Queries.GetAllProductoQuery
             _mapper = mapper;
         }
 
-        public async Task<Response<IEnumerable<ListaProductosDto>>> Handle(GetAllProductoQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<ProductoDto>>> Handle(GetAllProductoQuery request, CancellationToken cancellationToken)
         {
-            var response = new Response<IEnumerable<ListaProductosDto>>();
+            var response = new Response<IEnumerable<ProductoDto>>();
 
             var productos = await _unitOfWork.Productos.GetAsync();
-            response.Data = _mapper.Map<List<ListaProductosDto>>(productos);
+            response.Data = _mapper.Map<List<ProductoDto>>(productos);
             if (response.Data != null)
             {
                 response.IsSuccess = true;

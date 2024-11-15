@@ -8,5 +8,6 @@ namespace ApplicationUseCases.Customers.Queries.GetAllWithPaginationCustomerQuer
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public string CustomerName { get; set; }
     }
 }

@@ -30,74 +30,34 @@ namespace Persistence.Repositories
             }
         }
 
-        public int Count()
+        public async Task<int> CountAsync()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<int> CountAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Delete(string id)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<bool> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Usuario Get(string id)
+        public Task<IEnumerable<Usuario>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public Task<IEnumerable<Usuario>> GetAsync(int id = 0)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<Usuario>> GetAllAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<Usuario> GetAllWithPagination(int pageNumber, int pageSize)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<Usuario>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Usuario> GetAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Insert(Usuario entity)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<bool> InsertAsync(Usuario entity)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Update(Usuario entity)
-        {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task<bool> UpdateAsync(Usuario entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

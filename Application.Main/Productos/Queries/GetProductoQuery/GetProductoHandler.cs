@@ -6,7 +6,7 @@ using Transversal.Common;
 
 namespace ApplicationUseCases.Productos.Queries.GetProductoQuery
 {
-    public class GetProductoHandler : IRequestHandler<GetProductoQuery, Response<IEnumerable<ListaProductosDto>>>
+    public class GetProductoHandler : IRequestHandler<GetProductoQuery, Response<IEnumerable<ProductoDto>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -17,12 +17,12 @@ namespace ApplicationUseCases.Productos.Queries.GetProductoQuery
             _mapper = mapper;
         }
 
-        public async Task<Response<IEnumerable<ListaProductosDto>>> Handle(GetProductoQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<ProductoDto>>> Handle(GetProductoQuery request, CancellationToken cancellationToken)
         {
-            var response = new Response<IEnumerable<ListaProductosDto>>();
+            var response = new Response<IEnumerable<ProductoDto>>();
 
             var product = await _unitOfWork.Productos.GetAsync(request.Id);
-            response.Data = _mapper.Map<List<ListaProductosDto>>(product);
+            response.Data = _mapper.Map<List<ProductoDto>>(product);
 
             if (product.Count()==0)
             {
