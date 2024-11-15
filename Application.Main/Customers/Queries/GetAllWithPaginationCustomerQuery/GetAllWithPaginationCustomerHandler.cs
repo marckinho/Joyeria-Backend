@@ -23,7 +23,7 @@ namespace ApplicationUseCases.Customers.Queries.GetAllWithPaginationCustomerQuer
 
             var count = await _unitOfWork.Customers.CountAsync();
 
-            var customers = await _unitOfWork.Customers.GetAllWithPaginationAsync(request.PageNumber, request.PageSize);
+            var customers = await _unitOfWork.Customers.GetAllWithPaginationAsync(request.PageNumber, request.PageSize,request.CustomerName);
             response.Data = _mapper.Map<IEnumerable<CustomerDto>>(customers);
 
             if (response.Data != null)

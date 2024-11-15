@@ -103,7 +103,7 @@ namespace Services.WebApi.Controllers
         }
 
         [HttpGet("GetAllWithPagination")]
-        public async Task<IActionResult> GetAllWithPagination([FromQuery] int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAllWithPagination([FromQuery] int pageNumber, int pageSize,string customerName)
         {
             var response = await _mediator.Send( new GetAllWithPaginationCustomerQuery() { PageNumber = pageNumber, PageSize = pageSize });
             if (response.IsSuccess)

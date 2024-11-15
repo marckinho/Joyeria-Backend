@@ -5,10 +5,14 @@ using ApplicationUseCases.Productos.Queries.GetAllProductoQuery;
 using ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuery;
 using ApplicationUseCases.Productos.Queries.GetProductoQuery;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Services.WebApi.Controllers
 {
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class ProductosController : Controller
     {
         private readonly IMediator _mediator;
@@ -32,7 +36,7 @@ namespace Services.WebApi.Controllers
             return BadRequest(response.Message);
         }
 
-        [HttpPost("Update/{productoId}")]
+        [HttpPost("Update/{Id}")]
         public async Task<IActionResult> Update(int Id, [FromBody] UpdateProductoCommand command)
         {
             var productoDto = await _mediator.Send(new GetProductoQuery() { Id = Id });
@@ -98,9 +102,9 @@ namespace Services.WebApi.Controllers
         }
 
         [HttpGet("GetAllPaginated")]
-        public async Task<IActionResult> GetAllPaginated([FromQuery] int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAllPaginated([FromQuery] int pageNumber, int pageSize,string productName)
         {
-            var response = await _mediator.Send(new GetAllPaginatedProductoQuery() { PageNumber = pageNumber, PageSize = pageSize });
+            var response = await _mediator.Send(new GetAllPaginatedProductoQuery() { PageNumber = pageNumber, PageSize = pageSize, ProductName=productName });
             if (response.IsSuccess)
                 return Ok(response);
 

@@ -9,10 +9,10 @@ namespace Aplication.Interface.Persistence
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(int id);
 
-        //Task<T> GetAsync(int id);
-        //Task<IEnumerable<T>> GetAsync();
+        //Task<T> GetAsync(int id=0);
+        Task<IEnumerable<T>> GetAsync(int id=0);
 
-        Task<IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize);
+        Task<IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName);
 
         Task<int> CountAsync();
     }

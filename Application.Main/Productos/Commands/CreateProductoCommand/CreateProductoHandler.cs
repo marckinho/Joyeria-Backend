@@ -1,4 +1,5 @@
 ﻿using Aplication.Interface.Persistence;
+using Application.DTO.ProductosDto;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
@@ -21,7 +22,7 @@ namespace ApplicationUseCases.Productos.Commands.CreateProductoCommand
         {
             var response = new Response<bool>();
 
-            var producto = _mapper.Map<Producto>(request);
+            var producto = _mapper.Map<ProductoDto>(request);
             response.Data = await _unitOfWork.Productos.InsertAsync(producto);
             await _unitOfWork.Save(cancellationToken);
             if (response.Data)

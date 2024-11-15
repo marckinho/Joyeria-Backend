@@ -13,7 +13,8 @@ namespace Services.WebApi.Modules.Feature
 
             services.AddCors(options => options.AddPolicy(myPolicy, builder => builder.WithOrigins(configuration["Config:OriginCors"])
                                                                                        .AllowAnyHeader()
-                                                                                       .AllowAnyMethod()));
+                                                                                       .AllowAnyMethod()
+                                                                                       .AllowCredentials()));
 
             services.AddCors(options =>
             {

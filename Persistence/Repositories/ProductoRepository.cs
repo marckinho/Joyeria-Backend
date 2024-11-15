@@ -1,4 +1,5 @@
-﻿using Application.DTO.ProductosDto;
+﻿using Aplication.Interface.Persistence;
+using Application.DTO.ProductosDto;
 using Application.Interface.Persistence;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ namespace Persistence.Repositories
 
         public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            int totalProductos = await _appcontext.Productos.CountAsync();
+            return totalProductos;
         }
 
         public async Task<bool> DeleteAsync(int productoId)
@@ -36,7 +38,7 @@ namespace Persistence.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateAsync(Producto producto)
+        public async Task<bool> UpdateAsync(ProductoDto producto)
         {
             var productoExistente = await _appcontext.Productos.FindAsync(producto.Id);
 
@@ -57,7 +59,7 @@ namespace Persistence.Repositories
 
         }
 
-        public async Task<IEnumerable<ListaProductosDto>> GetAsync(int id)
+        public async Task<IEnumerable<ProductoDto>> GetAsync(int id)
         {
             var productos = await _appcontext.Productos
             .Include(p => p.Tipo_Producto_Venta)
@@ -66,7 +68,7 @@ namespace Persistence.Repositories
             if(id>0)
                 productos = productos.Where(p => p.Id == id).ToList();
 
-            return productos.Select(p => new ListaProductosDto
+            return productos.Select(p => new ProductoDto
             {
                 Id = p.Id,
                 Nombre = p.Nombre,
@@ -76,21 +78,31 @@ namespace Persistence.Repositories
             }).ToList();
         }
 
-        public Task<IEnumerable<Producto>> GetAllWithPaginationAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<ProductoDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
-            throw new NotImplementedException();
+            var productos = await _appcontext.Productos
+                .Where(p => p.Activo && (string.IsNullOrEmpty(productName) || p.Nombre.Contains(productName)))
+                .OrderBy(p => p.Nombre)
+                .Include(p => p.Tipo_Producto_Venta)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return productos.Select(p => new ProductoDto
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Activo = p.Activo,
+                Tipo_Producto_Venta_Id = p.Tipo_Producto_Venta.Id,
+                Tipo_Producto_Venta_Nombre = p.Tipo_Producto_Venta.Nombre
+            }).ToList();
         }
 
-        public async Task<bool> InsertAsync(Producto producto)
+        public async Task<bool> InsertAsync(ProductoDto producto)
         {
             await _appcontext.AddAsync(producto);
 
             return true;
-        }
-
-        public Task<IEnumerable<ListaProductosDto>> GetAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

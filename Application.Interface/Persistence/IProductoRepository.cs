@@ -4,8 +4,9 @@ using Domain.Entities;
 
 namespace Application.Interface.Persistence
 {
-    public interface IProductoRepository : IGenericRepository<Producto>
+    public interface IProductoRepository : IGenericRepository<ProductoDto>
     {
-        Task<IEnumerable<ListaProductosDto>> GetAsync(int id=0);
+        /*Task<IEnumerable<ProductoDto>> GetAsync(int id=0);
+        Task<IEnumerable<ProductoDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName);*/
     }
 }

@@ -15,20 +15,16 @@ namespace ApplicationUseCases.Common.Mappings
         {
             CreateMap<Customer, CustomerDto>().ReverseMap();
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
-
-            CreateMap<Producto, ProductoDto>().ReverseMap();
-            CreateMap<Producto, ListaProductosDto>().ReverseMap();
             
-            CreateMap<Producto, CreateProductoCommand>().ReverseMap();
-            CreateMap<UpdateProductoCommand, Producto>().ReverseMap();
-
-
+            CreateMap<ProductoDto, CreateProductoCommand>().ReverseMap();
+            CreateMap<UpdateProductoCommand, ProductoDto>().ReverseMap();
+            
             CreateMap<Customer,CreateCustomerCommand>().ReverseMap();
             CreateMap<Customer,UpdateCustomerCommand>().ReverseMap();
 
             CreateMap<Tipo_Producto_Venta, Tipo_Producto_VentaDto>();
 
-            CreateMap<Producto, ListaProductosDto>()
+            CreateMap<Producto, ProductoDto>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Nombre, opt => opt.MapFrom(src => src.Nombre))
             .ForMember(dest => dest.Activo, opt => opt.MapFrom(src => src.Activo))
