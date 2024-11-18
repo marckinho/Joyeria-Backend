@@ -9,11 +9,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\marcosmorales\Documents\Marcos\Cursos_Udemy\Arquitectura\TransversalCommon\TransversalCommon\Services.WebApi\Services.WebApi.xml</DocumentationFile>
-  </PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile>bin\Debug\net8.0\Services.WebApi.xml</DocumentationFile>
+</PropertyGroup>
+
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\marcosmorales\Documents\Marcos\Cursos_Udemy\Arquitectura\TransversalCommon net core 3.0\TransversalCommon\Services.WebApi\Services.WebApi.xml</DocumentationFile>
-  </PropertyGroup>
+    <DocumentationFile>bin\Release\Services.WebApi.xml</DocumentationFile>
+</PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
