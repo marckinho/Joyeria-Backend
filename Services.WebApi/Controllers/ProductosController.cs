@@ -102,9 +102,9 @@ namespace Services.WebApi.Controllers
         }
 
         [HttpGet("GetAllPaginated")]
-        public async Task<IActionResult> GetAllPaginated([FromQuery] int pageNumber, int pageSize,string productName)
+        public async Task<IActionResult> GetAllPaginated([FromQuery] int pageNumber, int pageSize,string searchValue)
         {
-            var response = await _mediator.Send(new GetAllPaginatedProductoQuery() { PageNumber = pageNumber, PageSize = pageSize, ProductName=productName });
+            var response = await _mediator.Send(new GetAllPaginatedProductoQuery() { PageNumber = pageNumber, PageSize = pageSize, ProductName= searchValue });
             if (response.IsSuccess)
                 return Ok(response);
 

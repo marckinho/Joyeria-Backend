@@ -5,6 +5,7 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Persistence.Repositories
 {
@@ -80,15 +81,31 @@ namespace Persistence.Repositories
 
         public async Task<IEnumerable<ProductoDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
-            var productos = await _appcontext.Productos
-                .Where(p => p.Activo && (string.IsNullOrEmpty(productName) || p.Nombre.Contains(productName)))
+
+            var productos = _appcontext.Productos.AsQueryable();
+
+            if (!string.IsNullOrEmpty(productName))
+            {
+                productos = productos.Where(p => p.Nombre.Contains(productName));
+                pageNumber = 1;
+            }
+
+            var prods = await productos
                 .OrderBy(p => p.Nombre)
                 .Include(p => p.Tipo_Producto_Venta)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            return productos.Select(p => new ProductoDto
+            /*var productos = await _appcontext.Productos
+                .Where(p => p.Activo && (string.IsNullOrEmpty(productName) || p.Nombre.Contains(productName)))
+                .OrderBy(p => p.Nombre)
+                .Include(p => p.Tipo_Producto_Venta)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();*/
+
+            return prods.Select(p => new ProductoDto
             {
                 Id = p.Id,
                 Nombre = p.Nombre,
