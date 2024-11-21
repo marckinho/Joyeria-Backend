@@ -11,6 +11,7 @@ namespace Aplication.Interface.Persistence
 
         //Task<T> GetAsync(int id=0);
         Task<IEnumerable<T>> GetAsync(int id=0);
+        Task<IEnumerable<T>> GetAllAsync();
 
         Task<IEnumerable<T>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName);
 

@@ -3,7 +3,7 @@ using Transversal.Common;
 
 namespace ApplicationUseCases.Productos.Commands.CreateProductoCommand
 {
-    public class CreateProductoCommand : IRequest<Response<bool>>
+    public sealed record CreateProductoCommand : IRequest<Response<bool>>
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

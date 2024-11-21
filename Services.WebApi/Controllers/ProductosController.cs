@@ -36,10 +36,10 @@ namespace Services.WebApi.Controllers
             return BadRequest(response.Message);
         }
 
-        [HttpPost("Update/{Id}")]
-        public async Task<IActionResult> Update(int Id, [FromBody] UpdateProductoCommand command)
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateProductoCommand command)
         {
-            var productoDto = await _mediator.Send(new GetProductoQuery() { Id = Id });
+            var productoDto = await _mediator.Send(new GetProductoQuery() { Id = command.Id });
 
             if (productoDto.Data == null)
                 return NotFound(productoDto.Message);

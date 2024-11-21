@@ -249,6 +249,11 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<Customer>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

@@ -8,6 +8,7 @@ namespace Aplication.Interface.Persistence
         ICustomersRepository Customers { get; }
         IUsuariosRepository Usuarios { get; }
         IProductoRepository Productos { get; }
+        ITipoProductoVentaRepository Tipo_Producto_Venta { get; }
         Task<int> Save(CancellationToken cancellationToken);
     }
 }

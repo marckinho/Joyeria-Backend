@@ -6,6 +6,7 @@ namespace Application.Interface.Persistence
 {
     public interface IProductoRepository : IGenericRepository<ProductoDto>
     {
+        public Task<bool> InsertAsync(Producto producto);
         /*Task<IEnumerable<ProductoDto>> GetAsync(int id=0);
         Task<IEnumerable<ProductoDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName);*/
     }

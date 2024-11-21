@@ -21,6 +21,7 @@ namespace Persistence
             services.AddScoped<ICustomersRepository, CustomerRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
             services.AddScoped<IProductoRepository, ProductoRepository>();
+            services.AddScoped<ITipoProductoVentaRepository, TipoProductoVentaRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;

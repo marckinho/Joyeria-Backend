@@ -1,11 +1,9 @@
-﻿using Aplication.Interface.Persistence;
-using Application.DTO.ProductosDto;
+﻿using Application.DTO.ProductosDto;
 using Application.Interface.Persistence;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 using System.Data;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Persistence.Repositories
 {
@@ -120,6 +118,18 @@ namespace Persistence.Repositories
             await _appcontext.AddAsync(producto);
 
             return true;
+        }
+
+        public async Task<bool> InsertAsync(Producto producto)
+        {
+            await _appcontext.AddAsync(producto);
+
+            return true;
+        }
+
+        public Task<IEnumerable<ProductoDto>> GetAllAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

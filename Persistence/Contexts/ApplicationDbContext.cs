@@ -16,6 +16,8 @@ namespace Persistence.Contexts
 
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Tipo_Producto_Venta> Tipo_Producto_Venta { get; set; }
+        public DbSet<Inventario> Inventario { get; set; }
+        public DbSet<TipoInventario> TipoInventario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -22,7 +22,7 @@ namespace ApplicationUseCases.Productos.Commands.CreateProductoCommand
         {
             var response = new Response<bool>();
 
-            var producto = _mapper.Map<ProductoDto>(request);
+            var producto = _mapper.Map<Producto>(request);
             response.Data = await _unitOfWork.Productos.InsertAsync(producto);
             await _unitOfWork.Save(cancellationToken);
             if (response.Data)

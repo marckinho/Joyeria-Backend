@@ -40,6 +40,11 @@ namespace Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<Usuario>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Usuario>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
             throw new NotImplementedException();
