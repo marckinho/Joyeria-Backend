@@ -23,7 +23,7 @@ namespace ApplicationUseCases.TipoProductoVenta.Queries.GetAllTipoProductoVentaQ
         {
             var response = new Response<IEnumerable<Tipo_Producto_VentaDto>>();
 
-            var data = await _unitOfWork.Productos.GetAsync();
+            var data = await _unitOfWork.Tipo_Producto_Venta.GetAllAsync();
             response.Data = _mapper.Map<List<Tipo_Producto_VentaDto>>(data);
             if (response.Data != null)
             {
