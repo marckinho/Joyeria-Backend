@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.DTO.ProductosDto;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Interceptors;
 using System.Reflection;

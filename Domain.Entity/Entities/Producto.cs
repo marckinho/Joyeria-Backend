@@ -11,5 +11,6 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public Tipo_Producto_Venta Tipo_Producto_Venta { get; set; }
+
     }
 }
