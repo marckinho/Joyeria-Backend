@@ -1,5 +1,4 @@
 ﻿using Application.Validator;
-using ApplicationUseCases.Customers;
 using ApplicationUseCases.Users;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

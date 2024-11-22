@@ -18,7 +18,6 @@ namespace Persistence
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("JoyeriaConnection"),
                 builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-            services.AddScoped<ICustomersRepository, CustomerRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
             services.AddScoped<IProductoRepository, ProductoRepository>();
             services.AddScoped<ITipoProductoVentaRepository, TipoProductoVentaRepository>();

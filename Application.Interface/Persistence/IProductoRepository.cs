@@ -1,5 +1,4 @@
 ﻿using Aplication.Interface.Persistence;
-using Application.DTO;
 using Application.DTO.ProductosDto;
 using Domain.Entities;
 

@@ -1,5 +1,4 @@
-﻿using Application.DTO;
-using Application.DTO.ProductosDto;
+﻿using Application.DTO.ProductosDto;
 using MediatR;
 using Transversal.Common;
 
