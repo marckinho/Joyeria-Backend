@@ -10,6 +10,5 @@ namespace Application.DTO
         public int Inventario_Id { get; set; }
         public decimal Costo { get; set; }
 
-        public List<ProductoDto> Productos { get; set; } = new List<ProductoDto>();
     }
 }

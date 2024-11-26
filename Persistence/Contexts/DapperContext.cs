@@ -12,7 +12,7 @@ namespace Persistence.Contexts
 {
     public class DapperContext : DbContext
     {
-        private readonly IConfiguration _configuration;
+        /*private readonly IConfiguration _configuration;
         private readonly string _connectionString;
 
         
@@ -23,7 +23,7 @@ namespace Persistence.Contexts
             _connectionString = configuration.GetConnectionString("JoyeriaConnection");
         }
 
-        public IDbConnection CreateConnection()=>new SqlConnection(_connectionString);
+        public IDbConnection CreateConnection()=>new SqlConnection(_connectionString);*/
 
     }
 }

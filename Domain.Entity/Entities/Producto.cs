@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Application.DTO;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
@@ -9,7 +10,6 @@ namespace Domain.Entities
         public int Tipo_Producto_Venta_Id { get; set; }
         public bool Activo { get; set; }
 
-        [JsonIgnore]
         public Tipo_Producto_Venta Tipo_Producto_Venta { get; set; }
 
     }

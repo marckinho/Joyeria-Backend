@@ -6,7 +6,7 @@ using Transversal.Common;
 
 namespace ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuery
 {
-    public class GetAllPaginatedProductoHandler : IRequestHandler<GetAllPaginatedProductoQuery, ResponsePagination<IEnumerable<ProductoTipoVentaDto>>>
+    public class GetAllPaginatedProductoHandler : IRequestHandler<GetAllPaginatedProductoQuery, ResponsePagination<IEnumerable<ProductoDto>>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -17,14 +17,14 @@ namespace ApplicationUseCases.Productos.Queries.GetAllWithPaginationProductoQuer
             _mapper = mapper;
         }
 
-        public async Task<ResponsePagination<IEnumerable<ProductoTipoVentaDto>>> Handle(GetAllPaginatedProductoQuery request, CancellationToken cancellationToken)
+        public async Task<ResponsePagination<IEnumerable<ProductoDto>>> Handle(GetAllPaginatedProductoQuery request, CancellationToken cancellationToken)
         {
-            var response = new ResponsePagination<IEnumerable<ProductoTipoVentaDto>>();
+            var response = new ResponsePagination<IEnumerable<ProductoDto>>();
 
             var count = await _unitOfWork.Productos.CountAsync();
 
             var productos = await _unitOfWork.Productos.GetAllWithPaginationAsync(request.PageNumber, request.PageSize, request.ProductName);
-            response.Data = _mapper.Map<IEnumerable<ProductoTipoVentaDto>>(productos);
+            response.Data = _mapper.Map<IEnumerable<ProductoDto>>(productos);
 
             if (response.Data != null)
             {

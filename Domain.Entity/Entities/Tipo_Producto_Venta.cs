@@ -10,7 +10,7 @@ namespace Domain.Entities
         public int Inventario_Id { get; set; }
         public decimal Costo { get; set; }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public List<Producto> Productos { get; set; } = new List<Producto>();
 
     }

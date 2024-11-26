@@ -11,4 +11,8 @@
     <Folder Include="Events\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Aoolication.DTO\Application.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

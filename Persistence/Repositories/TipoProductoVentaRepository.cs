@@ -27,8 +27,6 @@ namespace Persistence.Repositories
         public async  Task<IEnumerable<Tipo_Producto_VentaDto>> GetAllAsync()
         {
             var tipoProductoVenta = await _appcontext.Tipo_Producto_Venta
-            //.Include(p => p.Tipo_Inventario_Id)
-            //.Include(p => p.Inventario_Id)
             .ToListAsync();
 
             return tipoProductoVenta.Select(p => new Tipo_Producto_VentaDto

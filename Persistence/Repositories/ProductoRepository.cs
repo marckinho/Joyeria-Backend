@@ -2,6 +2,7 @@
 using Application.DTO;
 using Application.DTO.ProductosDto;
 using Application.Interface.Persistence;
+using AutoMapper;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
@@ -12,10 +13,12 @@ namespace Persistence.Repositories
     public class ProductoRepository : IProductoRepository 
     {
         private readonly ApplicationDbContext _appcontext;
+        private readonly IMapper _mapper;
 
-        public ProductoRepository(ApplicationDbContext appcontext)
+        public ProductoRepository(ApplicationDbContext appcontext,IMapper mapper)
         {
             _appcontext = appcontext;
+            _mapper = mapper;
         }
 
         public async Task<int> CountAsync()
@@ -86,12 +89,17 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task<IEnumerable<ProductoDto>> GetAllAsync()
+        public async Task<IEnumerable<Producto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var producto = await _appcontext.Productos
+            .Include(p => p.Tipo_Producto_Venta)
+            .Where(p => p.Activo)
+            .ToListAsync();
+
+            return producto;
         }
 
-        public async Task<IEnumerable<ProductoTipoVentaDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
+        public async Task<IEnumerable<Producto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
         {
             var productos = _appcontext.Productos.AsQueryable();
 
@@ -108,30 +116,10 @@ namespace Persistence.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return prods.Select(p => new ProductoTipoVentaDto
-            {
-                Id = p.Id,
-                Nombre = p.Nombre,
-                Activo = p.Activo,
-                Tipo_Producto_Venta = new Tipo_Producto_VentaDto
-                {
-                    Id = p.Tipo_Producto_Venta.Id,
-                    Nombre = p.Tipo_Producto_Venta.Nombre,
-                    Tipo_Inventario_Id = p.Tipo_Producto_Venta.Tipo_Inventario_Id,
-                    Inventario_Id = p.Tipo_Producto_Venta.Inventario_Id,
-                    Costo = p.Tipo_Producto_Venta.Costo
-                }
-            }).ToList();
-        }
+            //var productoDto=_mapper.Map<IEnumerable<ProductoDto>>(prods);
 
-        Task<IEnumerable<ProductoDto>> IGenericRepository<ProductoDto>.GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName)
-        {
-            throw new NotImplementedException();
-        }
+            return prods;
 
-        Task<IEnumerable<ProductoDto>> IGenericRepository<ProductoDto>.GetAsync(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<bool> InsertAsync(Producto producto)
@@ -140,7 +128,12 @@ namespace Persistence.Repositories
             return true;
         }
 
-        public Task<bool> InsertAsync(ProductoDto entity)
+        public Task<bool> UpdateAsync(Producto entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IEnumerable<Producto>> IGenericRepository<Producto>.GetAsync(int id)
         {
             throw new NotImplementedException();
         }

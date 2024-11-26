@@ -4,10 +4,8 @@ using Domain.Entities;
 
 namespace Application.Interface.Persistence
 {
-    public interface IProductoRepository : IGenericRepository<ProductoDto>
+    public interface IProductoRepository : IGenericRepository<Producto>
     {
-        public Task<bool> InsertAsync(Producto producto);
-        /*Task<IEnumerable<ProductoDto>> GetAsync(int id=0);*/
-        Task<IEnumerable<ProductoTipoVentaDto>> GetAllWithPaginationAsync(int pageNumber, int pageSize, string productName);
+        Task<bool> UpdateAsync(ProductoDto producto);
     }
 }

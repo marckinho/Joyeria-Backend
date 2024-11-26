@@ -1,4 +1,5 @@
-﻿using Application.DTO.ProductosDto;
+﻿using Application.DTO;
+using Application.DTO.ProductosDto;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Interceptors;
@@ -25,22 +26,16 @@ namespace Persistence.Contexts
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
 
-            /*builder.Entity<Producto>()
-            .Property(c => c.Activo)
-            .HasConversion(
-                v => v ? (byte)1 : (byte)0, // Conversión de `bool` a `byte` al guardar
-                v => v == 1 // Conversión de `byte` a `bool` al leer
-            );*/
-
-            /*builder.Entity<Producto>()
-            .Property(p => p.Activo)
-            .HasColumnType("bit");*/
-
             builder.Entity<Producto>()
             .HasOne(p => p.Tipo_Producto_Venta)  // Relación de Producto a TipoProductoVenta
             .WithMany(t => t.Productos)        // Relación inversa: TipoProductoVenta tiene muchos Productos
             .HasForeignKey(p => p.Tipo_Producto_Venta_Id)  // Clave foránea
             .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Tipo_Producto_Venta>()
+            .HasMany(t => t.Productos)
+            .WithOne(p => p.Tipo_Producto_Venta)
+            .HasForeignKey(p => p.Tipo_Producto_Venta_Id);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
